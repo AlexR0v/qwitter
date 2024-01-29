@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  bwitter:
+    restart: always
+    container_name: bwitter
+    image: postgres:14-alpine
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    networks:
+      - java
+#  adminer:
+#    image: adminer
+#    restart: always
+#    depends_on:
+#      - shop_nest_next_db
+#    ports:
+#      - "7000:8080"
+#    networks:
+#      - nestjs
+networks:
+  java:
+    driver: bridge
