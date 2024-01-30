@@ -12,11 +12,13 @@ import ru.alexrov.qwitterapi.models.ApplicationUser;
 import ru.alexrov.qwitterapi.models.RegisterObject;
 import ru.alexrov.qwitterapi.services.UserService;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("*")
 public class AuthController {
 
     private final UserService userService;
@@ -57,9 +59,10 @@ public class AuthController {
     }
 
     @PostMapping("/email/code")
-    public ResponseEntity<String> sendEmailCode(@RequestBody LinkedHashMap<String, String> body) {
+    public ResponseEntity<Map<String, String>> sendEmailCode(@RequestBody LinkedHashMap<String, String> body) {
         userService.sendEmailVerificationCode(body.get("username"));
-        return ResponseEntity.status(HttpStatus.OK).body("Email verification code sent");
+        Map<String, String> response = Collections.singletonMap("message", "Email verification code sent");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @ExceptionHandler({IncorrectEmailVerificationCodeException.class})

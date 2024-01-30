@@ -2,10 +2,15 @@ import { Alert, DatePicker, Input }   from 'antd'
 import locale                         from 'antd/es/date-picker/locale/ru_RU'
 import { Dayjs }                      from 'dayjs'
 import { Controller, useFormContext } from 'react-hook-form'
+import { AiOutlineCheckCircle }       from 'react-icons/ai'
 import { cn }                         from '../../../../utils/mergeStyles.ts'
 import { IRegister }                  from '../../types'
 
-const First = () => {
+interface Props {
+  isAccept?: boolean
+}
+
+const First = ({ isAccept }: Props) => {
   
   const { control, formState } = useFormContext<IRegister>()
   
@@ -19,6 +24,8 @@ const First = () => {
             {...field}
             status={formState.errors?.firstName ? 'error' : ''}
             placeholder='Имя'
+            prefix={isAccept && <AiOutlineCheckCircle color='#52c41a' />}
+            disabled={isAccept}
           />
         )}
       />
@@ -30,6 +37,8 @@ const First = () => {
             {...field}
             status={formState.errors?.lastName ? 'error' : ''}
             placeholder='Фамилия'
+            prefix={isAccept && <AiOutlineCheckCircle color='#52c41a' />}
+            disabled={isAccept}
           />
         )}
       />
@@ -42,11 +51,17 @@ const First = () => {
             status={formState.errors?.email ? 'error' : ''}
             type='email'
             placeholder='E-mail'
+            prefix={isAccept && <AiOutlineCheckCircle color='#52c41a' />}
+            disabled={isAccept}
           />
         )}
       />
       <div className='flex flex-col gap-2'>
-        <p className='text-xs text-gray-400'>Непубличная информация, которая не будет нигде опубликована</p>
+        <p className='text-sm'>Дата рождения</p>
+        <p className='text-xs text-gray-400'>
+          Эта информация не будет общедоступной. Подтвердите свой возраст, даже если эта учетная запись
+          предназначена для компании, домашнего животного и т. д.
+        </p>
         <Controller
           name={'dateOfBirth'}
           control={control}
@@ -58,6 +73,7 @@ const First = () => {
               onChange={field.onChange}
               status={formState.errors?.dateOfBirth ? 'error' : ''}
               placeholder='Дата рождения'
+              disabled={isAccept}
             />
           )}
         />

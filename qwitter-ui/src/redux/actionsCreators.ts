@@ -1,6 +1,5 @@
-import {decrement, increment} from './counterSlice.ts'
+import { setUser } from './userSlice.ts'
 
 export const actionCreators = {
-    increment,
-    decrement,
+  setUser,
 }

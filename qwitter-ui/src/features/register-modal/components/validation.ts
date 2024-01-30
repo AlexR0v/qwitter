@@ -25,4 +25,6 @@ export const validationSchema = Yup.object().shape({
     .max(50, 'Длина Логина должна быть не более 50-ти символов'),
   dateOfBirth: Yup.string()
     .required('Дата рождения не может быть пустой'),
+  isAgree: Yup.boolean().required(),
+  code: Yup.string().required(),
 })
